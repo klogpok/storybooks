@@ -4,7 +4,7 @@
   "description": "Service for sharing  stories",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app"
   },
   "author": "Oleg Kleiman",
   "license": "MIT",
