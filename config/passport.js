@@ -16,7 +16,7 @@ module.exports = passport => {
       },
       (accessToken, refreshToken, profile, done) => {
         // console.log(accessToken);
-        // console.log(profile);
+        //console.log(profile);
 
         const image = profile.photos[0].value.substring(
           0,
@@ -25,8 +25,9 @@ module.exports = passport => {
 
         newUser = {
           googleID: profile.id,
-          fistName: profile.name.givenName,
+          firstName: profile.name.givenName,
           lastName: profile.name.familyName,
+          displayName: profile.displayName,
           email: profile.emails[0].value,
           image: image
         };
