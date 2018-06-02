@@ -27,8 +27,8 @@ module.exports = passport => {
           googleID: profile.id,
           fistName: profile.name.givenName,
           lastName: profile.name.familyName,
-          email: profile.email[0],
-          image
+          email: profile.emails[0].value,
+          image: image
         };
 
         // Check for existing user
@@ -45,4 +45,12 @@ module.exports = passport => {
       }
     )
   );
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id).then(user => done(null, user));
+  });
 };

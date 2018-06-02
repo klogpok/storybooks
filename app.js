@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const passport = require('passport');
 
 // Load User Model
@@ -24,6 +26,25 @@ mongoose
   .catch(err => console.log(err));
 
 const app = express();
+
+app.use(cookieParser());
+app.use(
+  session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Global vars
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 
 app.get('/', (req, res) => {
   res.send('Index page');
