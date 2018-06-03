@@ -23,10 +23,16 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
   <script>
     $(document).ready(function () {
       $('.sidenav').sidenav();
       $('.fixed-action-btn').floatingActionButton();
+      $('select').formSelect();
+    });
+
+    CKEDITOR.replace('body', {
+      plugins: 'wysiwygarea,toolbar,basicstyles,link'
     });
   </script>
 </body>

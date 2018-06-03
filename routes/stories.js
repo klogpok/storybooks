@@ -10,7 +10,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('stories/add');
 });
 
-router.get('/edit', (req, res) => {
+router.get('/edit', ensureAuthenticated, (req, res) => {
   res.render('stories/edit');
 });
 
