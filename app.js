@@ -3,11 +3,13 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 
-// Load User Model
+// Load Models
 require('./models/User');
+require('./models/Story');
 
 // Passport config
 require('./config/passport')(passport);
@@ -31,6 +33,11 @@ mongoose
 
 const app = express();
 
+// Load Body Parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Load Cookie Parser middleware
 app.use(cookieParser());
 app.use(
   session({
@@ -40,7 +47,7 @@ app.use(
   })
 );
 
-// Habdlebars Middleware
+// Load Handlebars Middleware
 app.engine(
   'handlebars',
   exphbs({
@@ -49,7 +56,7 @@ app.engine(
 );
 app.set('view engine', 'handlebars');
 
-// Passport Middleware
+// Load Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 

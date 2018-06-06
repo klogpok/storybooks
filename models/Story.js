@@ -19,9 +19,6 @@ const StorySchema = new Schema({
     type: Boolean,
     default: true
   },
-  displayName: {
-    type: String
-  },
   comments: [
     {
       commentBody: {
