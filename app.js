@@ -22,6 +22,9 @@ const stories = require('./routes/stories');
 // Load Keys
 const keys = require('./config/keys');
 
+// Load Handlebars helper
+const { trancate, stripTags } = require('./helpers/hbs');
+
 // Mongoose Promise
 mongoose.Promise = global.Promise;
 
@@ -51,6 +54,10 @@ app.use(
 app.engine(
   'handlebars',
   exphbs({
+    helpers: {
+      trancate,
+      stripTags
+    },
     defaultLayout: 'main'
   })
 );
