@@ -10,7 +10,11 @@ const Story = mongoose.model('stories');
 const User = mongoose.model('users');
 
 router.get('/', (req, res) => {
-  res.render('stories/index');
+  Story.find({ status: 'public' })
+    .populate('user')
+    .then(stories => {
+      res.render('stories/index', { stories });
+    });
 });
 
 // Add story router
@@ -20,7 +24,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 
 // Proccess Add Story
 router.post('/', ensureAuthenticated, (req, res) => {
-  console.log(req.body.allowComments);
+  //console.log(req.body.allowComments);
   let allowComments = req.body.allowComments === 'on' ? true : false;
 
   const newStory = {
@@ -34,7 +38,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
   new Story(newStory)
     .save()
     .then(story => {
-      res.redirect(`/stories/show/${story.id}`);
+      //res.redirect(`/stories/show/${story.id}`);
+      res.redirect('/stories');
     })
     .catch(err => console.log(err));
 });
