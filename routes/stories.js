@@ -53,12 +53,37 @@ router.get('/show/:id', (req, res) => {
     });
 });
 
+// Edit form
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   Story.findOne({ _id: req.params.id })
     .populate('user')
     .then(story => {
       res.render('stories/edit', { story });
     });
+});
+
+// Edit Form Proccess
+router.put('/:id', (req, res) => {
+  Story.findOne({ _id: req.params.id }).then(story => {
+    let allowComments = req.body.allowComments ? true : false;
+
+    // New values
+    story.title = req.body.title;
+    story.body = req.body.body;
+    story.status = req.body.status;
+    story.allowComments = allowComments;
+
+    story.save().then(() => {
+      res.redirect('/dashboard');
+    });
+  });
+});
+
+// Delete Story
+router.delete('/delete/:id', ensureAuthenticated, (req, res) => {
+  Story.findOneAndRemove({ _id: req.params.id }).then(() => {
+    res.render('index/dashboard');
+  });
 });
 
 module.exports = router;
