@@ -15,7 +15,7 @@ const StorySchema = new Schema({
     type: String,
     default: 'public'
   },
-  AllowComments: {
+  allowComments: {
     type: Boolean,
     default: true
   },

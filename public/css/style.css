@@ -18,5 +18,10 @@ main {
 
 #delete-form {
   display: inline;
-  margin-left: 10px;
+  margin: 0 30px;
+}
+
+.center {
+  display: flex;
+  justify-content: flex-end;
 }
