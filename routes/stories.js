@@ -13,6 +13,10 @@ router.get('/', (req, res) => {
   Story.find({ status: 'public' })
     .populate('user')
     .then(stories => {
+      //console.log(stories[0].user.id);
+      // const filteredStories = stories.filter(
+      //   story => story.user.id === stories.user._id
+      // );
       res.render('stories/index', { stories });
     });
 });
@@ -44,12 +48,17 @@ router.post('/', ensureAuthenticated, (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.get('/edit', ensureAuthenticated, (req, res) => {
-  res.render('stories/edit');
+// Show Single Story
+router.get('/show/:id', (req, res) => {
+  Story.findOne({ _id: req.params.id })
+    .populate('user')
+    .then(story => {
+      res.render('stories/show', { story });
+    });
 });
 
-router.get('/show', (req, res) => {
-  res.render('stories/show');
+router.get('/edit', ensureAuthenticated, (req, res) => {
+  res.render('stories/edit');
 });
 
 module.exports = router;
