@@ -13,10 +13,6 @@ router.get('/', (req, res) => {
   Story.find({ status: 'public' })
     .populate('user')
     .then(stories => {
-      //console.log(stories[0].user.id);
-      // const filteredStories = stories.filter(
-      //   story => story.user.id === stories.user._id
-      // );
       res.render('stories/index', { stories });
     });
 });
