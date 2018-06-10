@@ -24,8 +24,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 
 // Proccess Add Story
 router.post('/', ensureAuthenticated, (req, res) => {
-  //console.log(req.body.allowComments);
-  let allowComments = req.body.allowComments === 'on' ? true : false;
+  let allowComments = req.body.allowComments == 'on' ? true : false;
 
   const newStory = {
     title: req.body.title,
@@ -38,7 +37,6 @@ router.post('/', ensureAuthenticated, (req, res) => {
   new Story(newStory)
     .save()
     .then(story => {
-      //res.redirect(`/stories/show/${story.id}`);
       res.redirect('/stories');
     })
     .catch(err => console.log(err));
@@ -65,7 +63,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 // Edit Form Proccess
 router.put('/:id', (req, res) => {
   Story.findOne({ _id: req.params.id }).then(story => {
-    let allowComments = req.body.allowComments ? true : false;
+    let allowComments = req.body.allowComments == 'on' ? true : false;
 
     // New values
     story.title = req.body.title;
@@ -80,9 +78,9 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete Story
-router.delete('/delete/:id', ensureAuthenticated, (req, res) => {
-  Story.findOneAndRemove({ _id: req.params.id }).then(() => {
-    res.render('index/dashboard');
+router.delete('/:id', ensureAuthenticated, (req, res) => {
+  Story.remove({ _id: req.params.id }).then(() => {
+    res.redirect('/dashboard');
   });
 });
 
