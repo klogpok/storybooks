@@ -46,6 +46,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
 router.get('/show/:id', (req, res) => {
   Story.findOne({ _id: req.params.id })
     .populate('user')
+    .populate('comments.commentUser')
     .then(story => {
       res.render('stories/show', { story });
     });
@@ -96,7 +97,7 @@ router.post('/comment/:id', (req, res) => {
 
     // Add comment to comments array
     story.comments.unshift(newComment);
-    story.save().then(story => redirect(`/stories/show/${story.id}`));
+    story.save().then(story => res.redirect(`/stories/show/${story.id}`));
   });
 });
 
