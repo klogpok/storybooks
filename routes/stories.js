@@ -9,9 +9,11 @@ const Story = mongoose.model('stories');
 // Load User Model
 const User = mongoose.model('users');
 
+// Stories Index
 router.get('/', (req, res) => {
   Story.find({ status: 'public' })
     .populate('user')
+    .sort({ date: 'desc' })
     .then(stories => {
       res.render('stories/index', { stories });
     });
@@ -54,11 +56,13 @@ router.get('/show/:id', (req, res) => {
 
 // Edit form
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
-  Story.findOne({ _id: req.params.id })
-    .populate('user')
-    .then(story => {
+  Story.findOne({ _id: req.params.id }).then(story => {
+    if (story.user != req.user.id) {
+      res.redirect('/stories');
+    } else {
       res.render('stories/edit', { story });
-    });
+    }
+  });
 });
 
 // Edit Form Proccess
