@@ -59,7 +59,19 @@ router.get('/my', ensureAuthenticated, (req, res) => {
   Story.find({ user: req.user.id })
     .populate('user')
     .then(stories => {
-      res.render('stories/index', { stories });
+      if (story.status == 'public') {
+        res.render('stories/index', { stories });
+      } else {
+        if (req.user) {
+          if (req.user.id == story.user._id) {
+            res.render('stories/index', { stories });
+          } else {
+            res.redirect('/stories');
+          }
+        } else {
+          res.redirect('/stories');
+        }
+      }
     });
 });
 
