@@ -1,4 +1,4 @@
-<h3>Public Stories</h3>
+<h3>Stories</h3>
 <div class="row">
   {{#each stories}}
   <div class="col s12 m4">
@@ -11,7 +11,8 @@
         <p class="story-text">{{{stripTags (trancate body 150)}}}</p>
         <br>
         <div class="chip">
-          <img src="{{user.image}}" alt="{{user.image}}"> {{user.displayName}}
+          <img src="{{user.image}}" alt="{{user.image}}">
+          <a href="/stories/user/{{user.id}}">{{user.displayName}}</a>
         </div>
         <br>
         <small>Posted: {{formatDate date 'MMMM Do YYYY HH:mm'}}</small>

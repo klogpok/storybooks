@@ -54,6 +54,24 @@ router.get('/show/:id', (req, res) => {
     });
 });
 
+// List of Stories by User
+router.get('/my', ensureAuthenticated, (req, res) => {
+  Story.find({ user: req.user.id })
+    .populate('user')
+    .then(stories => {
+      res.render('stories/index', { stories });
+    });
+});
+
+// Logged in user stories
+router.get('/user/:userId', (req, res) => {
+  Story.find({ user: req.params.userId, status: 'public' })
+    .populate('user')
+    .then(stories => {
+      res.render('stories/index', { stories });
+    });
+});
+
 // Edit form
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   Story.findOne({ _id: req.params.id }).then(story => {
